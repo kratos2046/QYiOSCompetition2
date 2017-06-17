@@ -241,7 +241,7 @@ static NSString* const kRecommendURL = @"http://iface.qiyi.com/openapi/batch/rec
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
     if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
        CollectionReusableHeadView *header= [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"HeadView" forIndexPath:indexPath];
-        ZPChannelInfo *info = _channelsInfos[indexPath.section];
+        ZPChannelInfo *info = _channelsInfos[indexPath.section+1];
         header.lable.text = info.title;
         return header;
     }
