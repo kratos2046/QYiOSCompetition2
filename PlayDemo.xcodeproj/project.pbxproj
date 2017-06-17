@@ -68,6 +68,8 @@
 		90A9448C1EF4D13700F031D7 /* libav.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 90A9448B1EF4D13700F031D7 /* libav.a */; };
 		90A944911EF4D8A600F031D7 /* RecommentCollectionViewCellDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 90A944901EF4D8A600F031D7 /* RecommentCollectionViewCellDataModel.m */; };
 		90A944941EF4D8B000F031D7 /* RecommentCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90A944931EF4D8B000F031D7 /* RecommentCollectionViewCell.m */; };
+		90A9449A1EF5413D00F031D7 /* CollectionReusableHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90A944991EF5413D00F031D7 /* CollectionReusableHeadView.m */; };
+		90A9449D1EF542F400F031D7 /* CollectionReusableFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90A9449C1EF542F400F031D7 /* CollectionReusableFooterView.m */; };
 		E56B6CA41EC169AA00648AF4 /* PlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E56B6CA31EC169AA00648AF4 /* PlayViewController.m */; };
 		E56B6CA81EC1A12200648AF4 /* playerBack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E56B6CA61EC1A12200648AF4 /* playerBack@2x.png */; };
 		E56B6CA91EC1A12200648AF4 /* playerBack@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E56B6CA71EC1A12200648AF4 /* playerBack@3x.png */; };
@@ -267,6 +269,10 @@
 		90A944901EF4D8A600F031D7 /* RecommentCollectionViewCellDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecommentCollectionViewCellDataModel.m; sourceTree = "<group>"; };
 		90A944921EF4D8B000F031D7 /* RecommentCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecommentCollectionViewCell.h; sourceTree = "<group>"; };
 		90A944931EF4D8B000F031D7 /* RecommentCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecommentCollectionViewCell.m; sourceTree = "<group>"; };
+		90A944981EF5413D00F031D7 /* CollectionReusableHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionReusableHeadView.h; sourceTree = "<group>"; };
+		90A944991EF5413D00F031D7 /* CollectionReusableHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionReusableHeadView.m; sourceTree = "<group>"; };
+		90A9449B1EF542F400F031D7 /* CollectionReusableFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionReusableFooterView.h; sourceTree = "<group>"; };
+		90A9449C1EF542F400F031D7 /* CollectionReusableFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionReusableFooterView.m; sourceTree = "<group>"; };
 		E56B6CA21EC169AA00648AF4 /* PlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayViewController.h; sourceTree = "<group>"; };
 		E56B6CA31EC169AA00648AF4 /* PlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayViewController.m; sourceTree = "<group>"; };
 		E56B6CA61EC1A12200648AF4 /* playerBack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "playerBack@2x.png"; sourceTree = "<group>"; };
@@ -802,6 +808,10 @@
 			children = (
 				90A944921EF4D8B000F031D7 /* RecommentCollectionViewCell.h */,
 				90A944931EF4D8B000F031D7 /* RecommentCollectionViewCell.m */,
+				90A944981EF5413D00F031D7 /* CollectionReusableHeadView.h */,
+				90A944991EF5413D00F031D7 /* CollectionReusableHeadView.m */,
+				90A9449B1EF542F400F031D7 /* CollectionReusableFooterView.h */,
+				90A9449C1EF542F400F031D7 /* CollectionReusableFooterView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1052,6 +1062,7 @@
 				189A11691EF2A56B007B615C /* UIButton+AFNetworking.m in Sources */,
 				18A6156A1EEFE3A60081BEDD /* ZPChannelPageController.m in Sources */,
 				184FF35B1EE82186002293B5 /* DCPathItemButton.m in Sources */,
+				90A9449A1EF5413D00F031D7 /* CollectionReusableHeadView.m in Sources */,
 				18F4E25C1EEC20C000D5659C /* ZPVideoInfoView.m in Sources */,
 				18AE603B1EF3886300F56F59 /* UIScrollView+MJRefresh.m in Sources */,
 				189A116B1EF2A56B007B615C /* UIProgressView+AFNetworking.m in Sources */,
@@ -1080,6 +1091,7 @@
 				18A6157A1EEFE4D30081BEDD /* AFHTTPSessionManager.m in Sources */,
 				18AE60321EF3886300F56F59 /* MJRefreshBackNormalFooter.m in Sources */,
 				90A944941EF4D8B000F031D7 /* RecommentCollectionViewCell.m in Sources */,
+				90A9449D1EF542F400F031D7 /* CollectionReusableFooterView.m in Sources */,
 				189A11651EF2A56B007B615C /* AFAutoPurgingImageCache.m in Sources */,
 				18A0B3181EEFA97C0058AABF /* ZPHomePageViewController.m in Sources */,
 				18C551FF1ED703120012E16B /* ZPPlayerViewController.m in Sources */,
