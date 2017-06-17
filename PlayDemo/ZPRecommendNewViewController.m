@@ -18,7 +18,11 @@
 static const CGFloat kCycleViewHeight = 180.0f;
 static NSString* const kRecommendURL = @"http://iface.qiyi.com/openapi/batch/recommend?app_k=f0f6c3ee5709615310c0f053dc9c65f2&app_v=8.4&app_t=0&platform_id=12&dev_os=10.3.1&dev_ua=iPhone9,3&dev_hw=%7B%22cpu%22%3A0%2C%22gpu%22%3A%22%22%2C%22mem%22%3A%2250.4MB%22%7D&net_sts=1&scrn_sts=1&scrn_res=1334*750&scrn_dpi=153600&qyid=87390BD2-DACE-497B-9CD4-2FD14354B2A4&secure_v=1&secure_p=iPhone&core=1&req_sn=1493946331320&req_times=1";
 
-@interface ZPRecommendNewViewController () <ZYBannerViewDataSource, ZYBannerViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource>
+@interface ZPRecommendNewViewController () <ZYBannerViewDataSource, ZYBannerViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout> {
+    CGFloat ImforMationCellwidth;
+    CGFloat TVCellwidth;
+    
+}
 
 /**
  *  频道列表
@@ -37,10 +41,16 @@ static NSString* const kRecommendURL = @"http://iface.qiyi.com/openapi/batch/rec
 #pragma mark - Controller Life Cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setWidth];
     [self setupSubView];
-    
     [self requestUrl];
+    
     // Do any additional setup after loading the view.
+}
+
+- (void)setWidth {
+    ImforMationCellwidth = (self.view.frame.size.width - 30)/2;
+    TVCellwidth = (self.view.frame.size.width - 40)/3;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -84,10 +94,15 @@ static NSString* const kRecommendURL = @"http://iface.qiyi.com/openapi/batch/rec
  */
 -(void)setupCollectionView {
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc]init];
-    flowLayout.itemSize = CGSizeMake(100, 150);
-    _collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, kCycleViewHeight, self.view.frame.size.width, self.view.frame.size.height-kCycleViewHeight) collectionViewLayout:flowLayout];
+  //  flowLayout.itemSize = CGSizeMake(120, 160);
+    flowLayout.sectionInset = UIEdgeInsetsMake(10, 10, 10, 10);
+    flowLayout.headerReferenceSize = CGSizeMake(self.view.frame.size.width, 20);
+    flowLayout.footerReferenceSize = CGSizeMake(self.view.frame.size.width, 40);
+    _collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, kCycleViewHeight+10, self.view.frame.size.width, self.view.frame.size.height-kCycleViewHeight) collectionViewLayout:flowLayout];
     [self.view addSubview:_collectionView];
     [_collectionView registerClass:[RecommentCollectionViewCell class] forCellWithReuseIdentifier:@"RecommentCollectionViewCell"];
+    [_collectionView registerClass:[UILabel class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeadView"];
+    [_collectionView registerClass:[UILabel class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"FootView"];
     _collectionView.delegate = self;
     _collectionView.dataSource = self;
     _collectionView.backgroundColor = [UIColor whiteColor];
@@ -215,10 +230,38 @@ static NSString* const kRecommendURL = @"http://iface.qiyi.com/openapi/batch/rec
 }
 
 #pragma mark UICollectionViewDelegate
+-(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0) {
+        return CGSizeMake(ImforMationCellwidth, ImforMationCellwidth*7/10+20);
+    }
+     return CGSizeMake(TVCellwidth,TVCellwidth*4/3+20);
+}
 
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+    if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
+       UICollectionReusableView *header= [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"HeadView" forIndexPath:indexPath];
+        ZPChannelInfo *info = _channelsInfos[indexPath.section];
+        UILabel *lable = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 20 )];
+        lable.text = info.title;
+        [header addSubview:lable];
+        return header;
+    }
+    if([kind isEqualToString:UICollectionElementKindSectionFooter]){
+        UICollectionReusableView *foot= [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"FootView" forIndexPath:indexPath];
+        UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 40 )];
+        [foot addSubview:btn];
+        [btn addTarget:self action:@selector(moreImformaton:) forControlEvents:UIControlEventTouchUpInside];
+        btn.tag = indexPath.section;
+        [btn setTitle:@"获取更多视频" forState:UIControlStateNormal];
+        return foot;
 
+    }
+    return nil;
+}
 
+- (void)moreImformaton:(UIButton *)btn {
 
+}
 
 /*
 #pragma mark - Navigation

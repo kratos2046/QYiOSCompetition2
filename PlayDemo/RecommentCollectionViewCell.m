@@ -45,6 +45,7 @@
     height = self.bounds.size.height;
     _imgView.frame =CGRectMake(0, 0, width, height-20);
     _text.frame = CGRectMake(0, height-20, width, 20);
+    _text.font = [UIFont systemFontOfSize:10];
 }
 
 
