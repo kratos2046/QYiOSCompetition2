@@ -6,7 +6,7 @@
 //  Copyright © 2017年 liuxiaodan. All rights reserved.
 //
 
-#import <QYPlayerController.h>
+#import "QYPlayerController.h"
 #import "ZPPlayerViewController.h"
 #import "ZPVideoInfo.h"
 #import "ZPVideoProgressBar.h"

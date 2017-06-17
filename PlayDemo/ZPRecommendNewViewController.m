@@ -12,11 +12,13 @@
 #import "ZPPlayerViewController.h"
 #import "ZYBannerView.h"
 #import "UIImageView+AFNetworking.h"
+#import "RecommentCollectionViewCellDataModel.h"
+#import "RecommentCollectionViewCell.h"
 
 static const CGFloat kCycleViewHeight = 180.0f;
 static NSString* const kRecommendURL = @"http://iface.qiyi.com/openapi/batch/recommend?app_k=f0f6c3ee5709615310c0f053dc9c65f2&app_v=8.4&app_t=0&platform_id=12&dev_os=10.3.1&dev_ua=iPhone9,3&dev_hw=%7B%22cpu%22%3A0%2C%22gpu%22%3A%22%22%2C%22mem%22%3A%2250.4MB%22%7D&net_sts=1&scrn_sts=1&scrn_res=1334*750&scrn_dpi=153600&qyid=87390BD2-DACE-497B-9CD4-2FD14354B2A4&secure_v=1&secure_p=iPhone&core=1&req_sn=1493946331320&req_times=1";
 
-@interface ZPRecommendNewViewController () <ZYBannerViewDataSource, ZYBannerViewDelegate>
+@interface ZPRecommendNewViewController () <ZYBannerViewDataSource, ZYBannerViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource>
 
 /**
  *  频道列表
@@ -27,7 +29,7 @@ static NSString* const kRecommendURL = @"http://iface.qiyi.com/openapi/batch/rec
  */
 @property (nonatomic, weak) ZYBannerView *cycleScrollView;
 
-@property (nonatomic, weak) UICollectionView *collectionView;
+@property (nonatomic, strong) UICollectionView *collectionView;
 @end
 
 @implementation ZPRecommendNewViewController
@@ -51,7 +53,6 @@ static NSString* const kRecommendURL = @"http://iface.qiyi.com/openapi/batch/rec
  */
 -(void)setupSubView {
     [self setupCycleView];
-//    [self setupCollectionView];
 }
 
 /**
@@ -82,11 +83,14 @@ static NSString* const kRecommendURL = @"http://iface.qiyi.com/openapi/batch/rec
  *  创建collection view
  */
 -(void)setupCollectionView {
-    UICollectionView *collectionView = [[UICollectionView alloc]init];
-    
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc]init];
-
-    
+    flowLayout.itemSize = CGSizeMake(100, 150);
+    _collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, kCycleViewHeight, self.view.frame.size.width, self.view.frame.size.height-kCycleViewHeight) collectionViewLayout:flowLayout];
+    [self.view addSubview:_collectionView];
+    [_collectionView registerClass:[RecommentCollectionViewCell class] forCellWithReuseIdentifier:@"RecommentCollectionViewCell"];
+    _collectionView.delegate = self;
+    _collectionView.dataSource = self;
+    _collectionView.backgroundColor = [UIColor whiteColor];
 }
 
 #pragma network request
@@ -126,6 +130,11 @@ static NSString* const kRecommendURL = @"http://iface.qiyi.com/openapi/batch/rec
                     [self reloadData];
                 });
             }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self setupCollectionView];
+            });
+            
+
         }
     }];
     
@@ -183,6 +192,31 @@ static NSString* const kRecommendURL = @"http://iface.qiyi.com/openapi/batch/rec
     playVC.videoInfo = video;
     [self presentViewController:playVC animated:YES completion:nil];
 }
+
+#pragma mark UICollectionViewDataSource
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return 6;
+}
+
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return _channelsInfos.count-1;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    RecommentCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"RecommentCollectionViewCell" forIndexPath:indexPath];
+     ZPChannelInfo *channelInfo = _channelsInfos[indexPath.section+1];
+    ZPVideoInfo *videoInfo = channelInfo.video_list[indexPath.row];
+    RecommentCollectionViewCellDataModel *model = [[RecommentCollectionViewCellDataModel alloc] initWithDict:videoInfo];
+    cell.dataModel = model;
+    return cell;
+    
+}
+
+#pragma mark UICollectionViewDelegate
+
+
 
 
 
